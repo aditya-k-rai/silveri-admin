@@ -1,0 +1,274 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FFFFFF;          /* Page Background: Pure White */
+  --foreground: #2A2421;          /* Readable Deep Charcoal-Brown Text */
+  --silver-50: #FFFFFF;           /* Surface Panels: Pure White */
+  --silver-100: #F4F4F5;          /* Input / Nested Elements: Light Neutral Grey */
+  --silver-200: #D8CCD0;          /* Soft pink-grey border tone */
+  --silver-300: #C4B2B6;          /* Medium border tone */
+  --silver-400: #A89094;          /* Muted text / placeholders */
+  --silver-500: #8E7478;          /* Secondary text color */
+  --silver-600: #745A5E;          /* Dark gray body text */
+  --silver-700: #5C4347;          /* High contrast text labels */
+  --silver-800: #422D30;          /* Near black titles */
+  --silver-900: #2D1A1D;          /* Pure dark text */
+  --accent: #B85A74;              /* Rose / Dark Pink Accent */
+  --accent-light: #FF8E9E;        /* Rose / Soft Pink hover */
+  --accent-dark: #8C3950;         /* Deep Rose / Dark Pink active */
+  --shimmer: #EAE1E2;
+  --warm-black: #2A2421;          /* Dark headings */
+  --muted: #A89094;
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Jost', sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-silver-50: var(--silver-50);
+  --color-silver-100: var(--silver-100);
+  --color-silver-200: var(--silver-200);
+  --color-silver-300: var(--silver-300);
+  --color-silver-400: var(--silver-400);
+  --color-silver-500: var(--silver-500);
+  --color-silver-600: var(--silver-600);
+  --color-silver-700: var(--silver-700);
+  --color-silver-800: var(--silver-800);
+  --color-silver-900: var(--silver-900);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+  --color-shimmer: var(--shimmer);
+  --color-gold: #B85A74;          /* Map gold to Dark Pink / Rose */
+  --color-gold-light: #FF8E9E;    /* Map gold-light to Rose hover */
+  --color-gold-dark: #8C3950;     /* Map gold-dark to Active Rose */
+  --color-cream: var(--background);
+  --color-warm-black: var(--accent); /* Maps bg-warm-black/text-warm-black to Rose/Dark Pink */
+  --color-silver: #A6A9AD;
+  --color-muted: var(--muted);
+  --color-white: #ffffff;          /* True white */
+  --color-black: var(--foreground); /* Maps black to dark charcoal text */
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Jost', sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+/* Global input fields theme overrides */
+input, select, textarea {
+  background-color: var(--silver-100) !important;
+  color: var(--foreground) !important;
+  border-color: var(--silver-200) !important;
+}
+input::placeholder, textarea::placeholder {
+  color: var(--silver-400) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8CCD0;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B85A74;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Silver shimmer animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Promo discount badge fly-up animation */
+@keyframes promoFly {
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
+  60%  { transform: translateY(-20px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(-40px) scale(0.9); opacity: 0; }
+}
+
+/* Fade in for discount row in summary */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide up for modals and guest walls */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.silver-shimmer {
+  background: linear-gradient(90deg, #D8CCD0 0%, #FAF8F5 25%, #FFF0F2 50%, #FAF8F5 75%, #D8CCD0 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Safe area for mobile bottom bar (iPhone notch) */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ===== Liquid Glass Effect ===== */
+.liquidGlass-wrapper {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(184, 90, 116, 0.05), 0 0 12px rgba(184, 90, 116, 0.02);
+}
+
+.liquidGlass-effect {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  filter: url(#glass-distortion);
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.liquidGlass-tint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(250, 248, 245, 0.45);
+  pointer-events: none;
+}
+
+.liquidGlass-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  box-shadow:
+    inset 1px 1px 1px 0 rgba(255,255,255,0.45),
+    inset -1px -1px 1px 1px rgba(255,255,255,0.15);
+}
+
+.liquidGlass-content {
+  position: relative;
+  z-index: 3;
+}
+
+.searchHeaderSurface {
+  overflow: visible;
+  z-index: 120;
+}
+
+/* ===== Gold Rose Button ===== */
+button.goldrose-btn { 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, #FFE1E5 0%, #FFB7C5 45%, #C86B85 100%);
+  border: 2px solid #FFB7C5;
+  border-radius: 0.88em;
+  padding: 8px 30px;
+  color: #2D1A1D;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+button.goldrose-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+/* ===== Gold Button (Rose Customization) ===== */
+.gold-button {
+  color: #ffffff;
+  background-image: linear-gradient(180deg, #FF8E9E 20%, #B85A74 80%);
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin: 5px;
+  border-width: 0;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 4px 12px 0 rgba(184, 90, 116, 0.35);
+  transition: all 0.5s ease;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* ===== Shine Animation & Class ===== */
+.shine-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-button::after {
+  content: '';
+  top: 0;
+  transform: translateX(100%);
+  width: 100%;
+  height: 220px;
+  position: absolute;
+  z-index: 1;
+  animation: slide 2s infinite;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+}
+
+@keyframes slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ===== Silver Button ===== */
+.silver-button {
+  background-color: rgba(5, 188, 191, 0);
+  color: #2D1A1D;
+  background-image: linear-gradient(180deg, #ffffff 20%, #dcdcdc 80%);
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border-width: 0;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 4px 12px 0 rgba(166, 169, 173, 0.3), 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.5s ease;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.silver-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px 0 rgba(166, 169, 173, 0.4), 0 4px 8px 0 rgba(0, 0, 0, 0.08);
+  opacity: 0.95;
+}
+.silver-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+.silver-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
