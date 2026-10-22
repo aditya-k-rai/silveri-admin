@@ -43,11 +43,39 @@ function getFirebaseApp(): FirebaseApp | null {
 
 export const app = getFirebaseApp();
 
+function getAuthInstance(): Auth {
+  if (!app) return null as unknown as Auth;
+  try {
+    return getAuth(app);
+  } catch {
+    return null as unknown as Auth;
+  }
+}
+
+function getFirestoreInstance(): Firestore {
+  if (!app) return null as unknown as Firestore;
+  try {
+    return getFirestore(app);
+  } catch (err) {
+    console.warn('[Firebase] Firestore init deferred/failed:', err);
+    return null as unknown as Firestore;
+  }
+}
+
+function getStorageInstance(): FirebaseStorage {
+  if (!app) return null as unknown as FirebaseStorage;
+  try {
+    return getStorage(app);
+  } catch {
+    return null as unknown as FirebaseStorage;
+  }
+}
+
 // These will be null during build if Firebase keys are missing — that's OK
 // Pages using them are client-side only ('use client')
-export const auth = app ? getAuth(app) : (null as unknown as Auth);
-export const db = app ? getFirestore(app) : (null as unknown as Firestore);
-export const storage = app ? getStorage(app) : (null as unknown as FirebaseStorage);
+export const auth = getAuthInstance();
+export const db = getFirestoreInstance();
+export const storage = getStorageInstance();
 
 export let analytics: import('firebase/analytics').Analytics | null = null;
 

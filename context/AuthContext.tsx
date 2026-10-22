@@ -76,21 +76,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               }
               setUserDoc(data);
             } else {
-              console.log('[ctx] no userDoc — creating new customer record');
-              const newUser: Omit<User, 'orderCount' | 'totalSpent'> = {
-                uid: firebaseUser.uid,
-                name: firebaseUser.displayName || '',
-                email: firebaseUser.email || '',
-                photoURL: firebaseUser.photoURL || '',
-                phone: '',
-                role: 'customer',
-                addresses: [],
-                wishlist: [],
-                blocked: false,
-                createdAt: new Date(),
-              };
-              await setDoc(userRef, newUser);
-              setUserDoc(newUser as User);
+              console.log('[ctx] no userDoc found in Firestore');
+              setUserDoc(null);
             }
           } catch (err) {
             console.error('[ctx] userDoc fetch/create failed:', err);

@@ -1,6 +1,7 @@
 import {
   GoogleAuthProvider,
   signInWithCredential,
+  signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
   signOut,
@@ -60,6 +61,14 @@ async function clearSessionCookie(): Promise<void> {
 export async function signInWithGoogle() {
   // Legacy redirect-based flow — kept for fallback only.
   await signInWithRedirect(auth, googleProvider);
+}
+
+export async function signInWithGooglePopup() {
+  if (!auth) throw new Error('Firebase auth not initialized');
+  const result = await signInWithPopup(auth, googleProvider);
+  const fbIdToken = await result.user.getIdToken();
+  await createSessionCookie(fbIdToken);
+  return result.user;
 }
 
 /**
