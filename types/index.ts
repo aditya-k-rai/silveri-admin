@@ -192,6 +192,16 @@ export interface HeroBanner {
   order: number;
 }
 
+export interface MediaSlide {
+  id: string;
+  type: 'image' | 'video';
+  url: string;
+  title?: string;
+  subtitle?: string;
+  link?: string;
+  active?: boolean;
+}
+
 export interface SiteSettings {
   heroImages: HeroBanner[];
   announcementText: string;
@@ -200,6 +210,8 @@ export interface SiteSettings {
    *  admin → Settings → Website Logo. When absent, Header falls back to the
    *  built-in "S" monogram. */
   logo?: string;
+  mediaSlides?: MediaSlide[];
+  mediaSlidesEnabled?: boolean;
   socialLinks: {
     instagram?: string;
     facebook?: string;

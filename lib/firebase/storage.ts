@@ -40,6 +40,14 @@ export async function uploadBannerImage(file: File, index: number): Promise<stri
   return getDownloadURL(snapshot.ref);
 }
 
+export async function uploadMediaSlideFile(file: File): Promise<string> {
+  const s = getStorageInstance();
+  const folder = file.type.startsWith('video/') ? 'slides/videos' : 'slides/images';
+  const storageRef = ref(s, `${folder}/${Date.now()}-${sanitize(file.name)}`);
+  const snapshot = await uploadBytes(storageRef, file);
+  return getDownloadURL(snapshot.ref);
+}
+
 export async function deleteStoragePath(path: string): Promise<void> {
   if (!app) return;
   try {
